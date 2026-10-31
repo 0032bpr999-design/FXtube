@@ -1,0 +1,315 @@
+<!DOCTYPE html><html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff"><meta name="mobile-web-app-capable" content="yes"><title>fx7tube</title>
+<style>
+:root{--bg:#fff;--fg:#0f0f0f;--c:#f2f2f2;--a:#ff0033;--m:#606060}
+@media(prefers-color-scheme:dark){:root{--bg:#0f0f0f;--fg:#f1f1f1;--c:#272727;--m:#aaa}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;overscroll-behavior:none}
+body{font-family:system-ui,-apple-system,Roboto,sans-serif;background:var(--bg);color:var(--fg);-webkit-user-select:none;user-select:none}
+input,textarea{-webkit-user-select:text;user-select:text}a{color:inherit;text-decoration:none}
+.fx{position:fixed;left:50%;transform:translateX(-50%);width:100%;max-width:520px;background:var(--bg);z-index:10}
+#bar{top:0;height:calc(54px + env(safe-area-inset-top,0px));padding:env(safe-area-inset-top,0px) 8px 0 14px;display:flex;align-items:center;gap:8px}
+.logo{font-size:22px;font-weight:800;letter-spacing:-1px;flex:1}.logo span{color:var(--a)}
+.ib{background:none;border:0;color:inherit;padding:8px;margin:0;display:flex;cursor:pointer;width:auto}
+#app{max-width:520px;margin:auto;padding-top:calc(54px + env(safe-area-inset-top,0px));padding-bottom:calc(70px + env(safe-area-inset-bottom,0px));min-height:100vh;animation:f .2s}
+@keyframes f{from{opacity:0}}
+nav{bottom:0;display:flex;border-top:1px solid #8882;padding-bottom:env(safe-area-inset-bottom,0px)}
+nav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 0 7px;font-size:11px;color:var(--m)}
+nav a.on{color:var(--fg);font-weight:600}nav a.on svg{stroke:var(--fg)}.pb{width:46px;height:46px;border-radius:50%;background:var(--c);display:flex;align-items:center;justify-content:center}
+body.v #bar,body.v nav,body.out #bar,body.out nav{display:none}body.v #app,body.out #app{padding-top:0}body.out #app{padding-bottom:0}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 14px 12px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;padding:8px 14px;border-radius:9px;background:var(--c);color:var(--fg);font:inherit;font-size:14px;border:0;cursor:pointer}.chip.on{background:var(--fg);color:var(--bg)}
+.vc{margin-bottom:20px}.vc>a>img{width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--c);display:block}
+.vm{display:flex;gap:12px;padding:10px 14px 0}.vm>a:last-child{flex:1;min-width:0}
+.t{font-weight:500;font-size:15px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.s{font-size:12.5px;color:var(--m);margin-top:3px}
+.av{border-radius:50%;object-fit:cover;background:var(--c);flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-weight:600;color:var(--m)}
+.btn{border:0;border-radius:20px;padding:9px 16px;font:inherit;font-weight:600;font-size:14px;background:var(--c);color:var(--fg);cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.btn.p{background:var(--fg);color:var(--bg)}.btn.lk.on svg{stroke:var(--a);fill:var(--a)}
+.in{width:100%;padding:13px 14px;border-radius:12px;border:0;background:var(--c);color:var(--fg);font:inherit;margin:6px 0;outline:none}
+.pw{position:sticky;top:0;z-index:5;background:#000}.pl{width:100%;aspect-ratio:16/9;display:block;border:0}
+.bkb{position:absolute;top:calc(6px + env(safe-area-inset-top,0px));left:6px;color:#fff;background:#0007;border-radius:50%;z-index:6}
+.pad{padding:12px 14px}.rw{display:flex;align-items:center;gap:10px}.rw>.g{flex:1;min-width:0}
+.desc{background:var(--c);border-radius:12px;padding:10px 12px;margin:12px 0;font-size:14px;white-space:pre-wrap;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.desc.o{display:block}
+.cm{display:flex;gap:12px;margin:14px 0;font-size:14px}.cm small{color:var(--m)}.cm a{color:var(--m);margin-left:8px;font-size:12px}
+#cb{bottom:0;display:flex;align-items:center;gap:6px;padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px)) 14px;border-top:1px solid #8882}#cb .in{margin:0;border-radius:22px}
+.lg{padding:12vh 24px 24px}.lg .logo{font-size:38px;text-align:center;flex:none}.lg p{text-align:center;color:var(--m);margin:6px 0 22px}
+.seg{display:flex;background:var(--c);padding:4px;border-radius:12px;margin-bottom:12px}.seg button{flex:1;border:0;background:none;color:var(--fg);font:inherit;padding:10px;border-radius:9px;cursor:pointer}.seg .on{background:var(--bg);font-weight:600}
+.err{color:var(--a);font-size:13px;min-height:20px}.h{font-size:16px;font-weight:600;margin:20px 14px 8px}.hs{display:flex;gap:16px;overflow-x:auto;padding:0 14px 8px;scrollbar-width:none}.hs a{text-align:center;font-size:12px;width:64px}
+.lst{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid #8881}.lst span{flex:1}.ctr{text-align:center;padding:20px 14px}
+#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 18px;border-radius:20px;font-size:14px;z-index:30;display:none;max-width:90%}
+body.sh #bar{display:none}body.sh #app{padding:0;min-height:0}
+.shs{position:fixed;top:0;bottom:calc(64px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);width:100%;max-width:520px;overflow-y:scroll;scroll-snap-type:y mandatory;background:#000;z-index:5;scrollbar-width:none;overscroll-behavior:contain}
+.shs::-webkit-scrollbar{display:none}
+.si{height:100%;scroll-snap-align:start;scroll-snap-stop:always;position:relative;color:#fff;overflow:hidden}
+.si iframe,.si video{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;object-fit:contain}
+.sov{position:absolute;inset:0}
+.sinfo{position:absolute;left:14px;right:84px;bottom:18px;text-shadow:0 1px 3px #000}
+.srail{position:absolute;right:10px;bottom:24px;display:flex;flex-direction:column;gap:16px;align-items:center}
+.srail button{background:#0007;border:0;color:#fff;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;margin:0}
+.srail small{display:block;text-align:center;font-size:11.5px;margin-top:3px;text-shadow:0 1px 3px #000;color:#fff}
+.stop{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);z-index:8;display:flex;gap:4px;background:#0008;padding:4px;border-radius:22px}
+.stop button{border:0;background:none;color:#fff;font:inherit;font-size:14px;padding:7px 16px;border-radius:18px;cursor:pointer}.stop .on{background:#fff;color:#000;font-weight:600}
+.ctab{background:none;border:0;color:var(--m);font:inherit;padding:10px 16px;border-bottom:3px solid transparent;cursor:pointer}.ctab.on{color:var(--fg);font-weight:600;border-bottom-color:var(--fg)}
+#swb{top:0;height:calc(36px + env(safe-area-inset-top,0px));padding:env(safe-area-inset-top,0px) 14px 0;align-items:center;justify-content:space-between;font-size:13px;font-weight:700;background:var(--c);display:none}
+body.adm #swb{display:flex}
+body.adm #bar{top:calc(36px + env(safe-area-inset-top,0px));height:54px;padding-top:0}
+body.adm #app{padding-top:calc(90px + env(safe-area-inset-top,0px))}
+.sw{position:relative;width:44px;height:24px;display:block}.sw input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;z-index:2;cursor:pointer}
+.sw i{position:absolute;inset:0;background:#8885;border-radius:12px;transition:.2s}.sw i:after{content:"";position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}
+.sw input:checked+i{background:var(--a)}.sw input:checked+i:after{left:23px}
+.ah{font-size:17px;font-weight:700;margin:6px 0 10px}
+.btn.w{width:100%;justify-content:center;padding:14px}
+.lst .g{flex:1;min-width:0}.lst .g b{display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-weight:500}
+.lst img.lt{width:96px;aspect-ratio:16/9;object-fit:cover;border-radius:8px;background:var(--c)}
+.upb{height:6px;background:var(--c);border-radius:3px;overflow:hidden;margin:10px 0}.upb i{display:block;height:100%;width:0;background:var(--a)}
+</style></head><body class="out">
+<div id="swb" class="fx"><span>অ্যাডমিন</span><label class="sw"><input type="checkbox" id="swi"><i></i></label></div><div id="bar" class="fx"></div><div id="app"><div class="ctr" style="padding-top:35vh"><div class="logo" style="font-size:36px"><span>fx7</span>tube</div><div class="s">লোড হচ্ছে…</div></div></div><div id="cb" class="fx" hidden></div>
+<nav class="fx" id="nav"></nav><div id="toast"></div>
+<script>
+(function(){function show(m){document.querySelector("#app").innerHTML='<div class="ctr" style="padding:25vh 20px 0"><div class="logo" style="font-size:34px"><span>fx7</span>tube</div><p class="err" style="margin:20px 0">'+m+'</p><button class="btn p" onclick="location.reload()">আবার চেষ্টা করো</button></div>'}
+addEventListener("error",function(e){if(!window.__ok)show("লোড হয়নি: "+(e.message||"স্ক্রিপ্ট ত্রুটি"))});
+addEventListener("unhandledrejection",function(e){if(!window.__ok)show("ত্রুটি: "+((e.reason&&(e.reason.code||e.reason.message))||""))});
+setTimeout(function(){if(!window.__ok)show("Firebase লোড হয়নি। ইন্টারনেট দেখো, আর ফাইলটা Firebase Hosting বা localhost দিয়ে খোলো (প্রিভিউ বা সরাসরি ফাইল খুললে চলে না)।")},7000)})();
+</script>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import{getAuth,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,updateProfile}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import{getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,collection,getDocs,addDoc,query,orderBy,writeBatch,increment,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import{getStorage,ref,uploadBytesResumable,getDownloadURL,deleteObject}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+const OWNER="Mn4iMUacjyfhxAmu64LqmQHFUI52";let ADM=false,AM=false,E=null,AUM="l";try{AM=localStorage.getItem("fx7am")=="1"}catch(e){}
+const fb=initializeApp({apiKey:"AIzaSyBOwpeEMG_FbdEzJQ0Y4Yi7Qx4-mSElJxc",authDomain:"messing-fd36d.firebaseapp.com",projectId:"messing-fd36d",storageBucket:"messing-fd36d.firebasestorage.app",messagingSenderId:"940979956369",appId:"1:940979956369:web:0a07e4275af149fc77ed30"});
+const auth=getAuth(fb),db=getFirestore(fb),st=getStorage(fb);
+let U=null,V=[],C={},F="",K=false;const $=s=>document.querySelector(s),app=$("#app");
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const mail=i=>i.includes("@")?i.trim():i.replace(/\D/g,"")+"@phone.myvideoapp.com";
+const yt=u=>(u.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/)||[])[1];
+const EM={"permission-denied":"Firestore Rules-এ অনুমতি নেই। Firebase Console > Firestore > Rules ঠিক করো","unavailable":"Firestore ডাটাবেস তৈরি করা হয়নি বা নেট নেই","not-found":"Firestore ডাটাবেস তৈরি করা হয়নি","failed-precondition":"Firestore-এ ইনডেক্স বা সেটআপ সমস্যা","auth/operation-not-allowed":"Authentication > Sign-in method-এ Email/Password চালু করো","auth/unauthorized-domain":"Authentication > Settings > Authorized domains-এ এই ডোমেইন যোগ করো","auth/operation-not-supported-in-this-environment":"ফাইল সরাসরি না খুলে Firebase Hosting বা localhost দিয়ে চালাও","auth/network-request-failed":"ইন্টারনেট সংযোগ নেই","auth/too-many-requests":"অনেকবার চেষ্টা করেছ, একটু পরে আবার দাও","auth/invalid-api-key":"API key ভুল","storage/unauthorized":"Storage Rules-এ অনুমতি নেই","storage/unknown":"Storage চালু নেই (Firebase Storage চালু করতে হবে, Blaze প্ল্যান লাগতে পারে)","storage/bucket-not-found":"Storage চালু করা হয়নি","storage/retry-limit-exceeded":"আপলোড ব্যর্থ, নেট দেখে আবার চেষ্টা করো"};
+const emsg=x=>(EM[x.code]||"ত্রুটি")+" ["+(x.code||x.message)+"]";
+const isAdmin=()=>ADM;
+const ADMP=new Set(["adash","aup","ayt","ach","avd"]);
+const APP="https://messing-fd36d.web.app/";
+const toast=m=>{const t=$("#toast");t.textContent=m;t.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display="none",2200)};
+const copyTxt=async t=>{try{await navigator.clipboard.writeText(t);return true}catch(e){try{const a=document.createElement("textarea");a.value=t;a.style.cssText="position:fixed;opacity:0";document.body.appendChild(a);a.select();const ok=document.execCommand("copy");a.remove();return ok}catch(x){return false}}};
+async function share(path,title){const url=APP+"#/"+path;
+if(navigator.share){try{await navigator.share({title,text:title,url});return}catch(e){if(e&&e.name==="AbortError")return}}
+if(await copyTxt(url))toast("লিংক কপি হয়েছে");else prompt("লিংকটা কপি করুন",url)}
+const YK="AIzaSyAckNqLulwyXsu4ylmUXZDSb1HmdLQ_I5A";let HM="o";const YC={},YS=new Map();
+const dec=t=>{const x=document.createElement("textarea");x.innerHTML=t||"";return x.value};
+const yf=async(p,q)=>{let r,j;try{r=await fetch("https://www.googleapis.com/youtube/v3/"+p+"?"+new URLSearchParams({key:YK,...q}));j=await r.json()}catch(e){throw new Error("ইন্টারনেট সংযোগ নেই")}
+if(!r.ok){const rs=j.error?.errors?.[0]?.reason||"";throw new Error(rs=="quotaExceeded"?"আজকের YouTube কোটা শেষ, কাল আবার চেষ্টা করুন":(rs.includes("eferer")||rs=="ipRefererBlocked")?"API key-র Website restriction এই ঠিকানার সঙ্গে মেলেনি ["+rs+"]":"YouTube ত্রুটি: "+(j.error?.message||r.status))}return j};
+const ytTrend=async()=>{if(YC.t&&Date.now()-YC.t.at<6e5)return YC.t.d;const j=await yf("videos",{part:"snippet",chart:"mostPopular",regionCode:"BD",maxResults:"25"});YC.t={at:Date.now(),d:j.items};return j.items};
+const ytSearch=async q=>{if(YS.has(q))return YS.get(q);const j=await yf("search",{part:"snippet",type:"video",videoEmbeddable:"true",safeSearch:"moderate",maxResults:"20",q});YS.set(q,j.items);return j.items};
+const fm=n=>new Intl.NumberFormat("en",{notation:"compact",maximumFractionDigits:2}).format(n);
+const meta=c=>({name:c.snippet.title,photoUrl:c.snippet.thumbnails?.medium?.url||c.snippet.thumbnails?.default?.url||"",ytChannelId:c.id,handle:c.snippet.customUrl||"",about:c.snippet.description||"",bannerUrl:c.brandingSettings?.image?.bannerExternalUrl?c.brandingSettings.image.bannerExternalUrl+"=w1060":"",ytSubs:c.statistics&&!c.statistics.hiddenSubscriberCount?+c.statistics.subscriberCount:null});
+let SM="o",snd=false,SIO=null;
+const isoSec=d=>{const m=/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/.exec(d||"");return m?(+m[1]||0)*3600+(+m[2]||0)*60+(+m[3]||0):9999};
+const ytShortSet=async ids=>{const r=new Set();for(let i=0;i<ids.length;i+=50){const j=await yf("videos",{part:"contentDetails",id:ids.slice(i,i+50).join(",")});j.items.forEach(x=>{if(isoSec(x.contentDetails.duration)<=60)r.add(x.id)})}return r};
+const ytShorts=async()=>{if(YC.s&&Date.now()-YC.s.at<18e5)return YC.s.d;const j=await yf("search",{part:"snippet",type:"video",videoDuration:"short",videoEmbeddable:"true",safeSearch:"moderate",regionCode:"BD",maxResults:"25",q:"#shorts"});YC.s={at:Date.now(),d:j.items};return j.items};
+const yc=(f,fn)=>{try{f.contentWindow.postMessage(JSON.stringify({event:"command",func:fn,args:[]}),"*")}catch(e){}};
+const sgrid=a=>a.length?'<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:0 4px">'+a.map(v=>`<a href="#/shorts/${v.id}" style="position:relative;display:block"><img src="${esc(v.thumbnailUrl)}" style="width:100%;aspect-ratio:9/16;object-fit:cover;background:var(--c);display:block;border-radius:6px"><div style="position:absolute;left:6px;right:6px;bottom:6px;color:#fff;font-size:12px;text-shadow:0 1px 3px #000;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">${esc(v.title)}</div></a>`).join("")+'</div>':'<div class="ctr s">কোনো শর্ট নেই</div>';
+const ycard=i=>{const id=i.id.videoId||i.id,s=i.snippet,th=s.thumbnails?.high?.url||s.thumbnails?.medium?.url||"";return`<div class="vc"><a href="#/y/${id}"><img src="${esc(th)}"></a><div class="vm">${av(s.channelTitle,"")}<a href="#/y/${id}"><div class="t">${esc(dec(s.title))}</div><div class="s">${esc(dec(s.channelTitle))}</div></a></div></div>`};
+const ic={home:'<path d="M3 11l9-8 9 8v10h-6v-6H9v6H3z"/>',search:'<circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/>',subs:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M7 3h10M10 11l5 3-5 3z"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-6 15-6 16 0"/>',back:'<path d="M15 5l-7 7 7 7"/>',like:'<path d="M7 11v9H3v-9zM7 11l4-8c2 0 3 1 3 3l-1 4h6c1 0 2 1 2 2l-2 7c0 1-1 2-2 2H7"/>',dash:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',yt:'<rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z"/>',up:'<path d="M12 16V4M6 10l6-6 6 6M4 20h16"/>',ch:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-6 15-6 16 0"/>',vd:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/>',shorts:'<rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 9l3 2-3 2z"/>',comment:'<path d="M4 5h16v11H9l-5 4z"/>',vol:'<path d="M4 9v6h4l5 4V5L8 9zM16 9a4 4 0 0 1 0 6"/>',share:'<path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v13"/>',plus:'<path d="M12 5v14M5 12h14"/>',send:'<path d="M3 11l18-8-8 18-2-8z"/>'};
+const svg=n=>`<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ic[n]}</svg>`;
+const av=(n,u,z=40,m=0)=>u?`<img class="av" src="${esc(u)}" style="width:${z}px;height:${z}px${m?";margin:auto":""}">`:`<div class="av" style="width:${z}px;height:${z}px;font-size:${z/2.3}px${m?";margin:auto":""}">${esc((n||"?")[0].toUpperCase())}</div>`;
+const card=v=>{const c=C[v.channelId]||{};return`<div class="vc"><a href="#/v/${v.id}"><img src="${esc(v.thumbnailUrl)}"></a><div class="vm"><a href="#/c/${v.channelId}">${av(c.name,c.photoUrl)}</a><a href="#/v/${v.id}"><div class="t">${esc(v.title)}</div><div class="s">${esc(c.name||"")} &middot; ${v.likeCount||0} Like</div></a></div></div>`};
+const list=a=>a.length?a.map(card).join(""):'<div class="ctr" style="padding-top:20vh"><div style="font-size:18px;font-weight:600">কোন ভিডিও নেই</div><div class="s" style="margin-top:6px">ভিডিও যোগ হলে এখানে দেখা যাবে</div></div>';
+const bar=h=>$("#bar").innerHTML=h;
+const topHome=()=>bar(`<div class="logo" style="display:flex;align-items:center;gap:6px;color:var(--fg)"><svg viewBox="0 0 28 20" width="30" height="21"><rect width="28" height="20" rx="5" fill="#f03"/><path d="M11 5l8 5-8 5z" fill="#fff"/></svg>fx7tube</div><a class="ib" href="#/search">${svg("search")}</a>`);
+const topBack=t=>{bar(`<button class="ib" id="bk">${svg("back")}</button><b style="font-size:18px">${esc(t)}</b>`);$("#bk").onclick=()=>history.back()};
+async function load(){const[a,b]=await Promise.all([getDocs(query(collection(db,"videos"),orderBy("createdAt","desc"))),getDocs(collection(db,"channels"))]);
+V=a.docs.map(d=>({id:d.id,...d.data()}));C={};b.docs.forEach(d=>C[d.id]={id:d.id,...d.data()})}
+// ---- Login ----
+function login(reg){app.innerHTML=`<div class="lg"><div class="logo"><span>fx7</span>tube</div><p>${reg?"নতুন অ্যাকাউন্ট খুলুন":"আবার স্বাগতম"}</p>
+<div class="seg"><button id="t1" class="${reg?"":"on"}">লগইন</button><button id="t2" class="${reg?"on":""}">রেজিস্টার</button></div>
+${reg?'<input class="in" id="n" placeholder="আপনার নাম">':""}<input class="in" id="i" inputmode="email" autocapitalize="none" placeholder="Gmail অথবা ফোন নম্বর"><input class="in" id="p" type="password" placeholder="পাসওয়ার্ড (কমপক্ষে ৬ অক্ষর)">
+<div class="err" id="e"></div><button class="btn p" id="go" style="width:100%;justify-content:center;padding:14px">${reg?"অ্যাকাউন্ট খুলুন":"লগইন করুন"}</button></div>`;
+$("#t1").onclick=()=>login(false);$("#t2").onclick=()=>login(true);
+$("#go").onclick=async()=>{const id=$("#i").value,pw=$("#p").value;$("#go").disabled=true;try{
+if(reg){const name=$("#n").value.trim()||"ব্যবহারকারী";const r=await createUserWithEmailAndPassword(auth,mail(id),pw);await updateProfile(r.user,{displayName:name});await setDoc(doc(db,"users",r.user.uid),{name,email:id,photoUrl:""})}
+else await signInWithEmailAndPassword(auth,mail(id),pw)}catch(x){$("#go").disabled=false;$("#e").textContent=({"auth/invalid-credential":"ইমেইল/ফোন বা পাসওয়ার্ড ভুল","auth/email-already-in-use":"এই অ্যাকাউন্ট আগেই আছে","auth/weak-password":"পাসওয়ার্ড কমপক্ষে ৬ অক্ষর দিন","auth/invalid-email":"ইমেইল বা ফোন নম্বর সঠিক নয়"})[x.code]||emsg(x)}}}
+// ---- Pages ----
+const pages={
+async home(){topHome();
+app.innerHTML=`<div class="chips"><button class="chip ${HM=="o"?"on":""}" data-m="o">আমাদের ভিডিও</button><button class="chip ${HM=="y"?"on":""}" data-m="y">YouTube ট্রেন্ডিং</button></div><div id="l"></div>`;
+app.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{HM=b.dataset.m;route()});
+if(HM=="y"){$("#l").innerHTML='<div class="ctr s">লোড হচ্ছে…</div>';try{const j=await ytTrend();$("#l").innerHTML=j.map(ycard).join("")||'<div class="ctr s">কিছু পাওয়া যায়নি</div>'}catch(e){$("#l").innerHTML=`<div class="ctr err">${esc(e.message)}</div>`}return}
+$("#l").innerHTML=`<div class="chips"><button class="chip on" data-f="">সব</button>${Object.values(C).map(c=>`<button class="chip" data-f="${c.id}">${esc(c.name)}</button>`).join("")}</div><div id="l2"></div>`;
+const LV=V.filter(v=>!v.isShort),d=()=>$("#l2").innerHTML=list(F?LV.filter(v=>v.channelId==F):LV);F="";d();
+app.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{F=b.dataset.f;app.querySelectorAll("[data-f]").forEach(x=>x.classList.toggle("on",x==b));d()})},
+async search(){bar(`<input class="in" id="q" placeholder="খুঁজুন, তারপর Enter চাপুন" enterkeyhint="search" style="margin:0 6px 0 0">`);app.innerHTML=`<div id="r" style="padding-top:8px">${list(V)}</div><div id="yr"></div>`;
+$("#q").oninput=e=>{const t=e.target.value.trim().toLowerCase();if(!t){$("#r").innerHTML=list(V);$("#yr").innerHTML="";return}const a=V.filter(v=>v.title.toLowerCase().includes(t)||(C[v.channelId]?.name||"").toLowerCase().includes(t));$("#r").innerHTML=a.length?'<div class="h">আমাদের ভিডিও</div>'+a.map(card).join(""):""};
+$("#q").onkeydown=async e=>{if(e.key!=="Enter")return;const t=e.target.value.trim();if(!t)return;e.target.blur();$("#yr").innerHTML='<div class="ctr s">YouTube-এ খোঁজা হচ্ছে…</div>';try{const r=await ytSearch(t);$("#yr").innerHTML='<div class="h">YouTube থেকে</div>'+(r.map(ycard).join("")||'<div class="ctr s">কিছু পাওয়া যায়নি</div>')}catch(x){$("#yr").innerHTML=`<div class="ctr err">${esc(x.message)}</div>`}}},
+async shorts(a){
+const own=a?V.find(v=>v.id==a):null;if(own)SM="o";else if(a)SM="y";
+const mk=v=>({id:v.id,col:"videos",url:v.videoUrl,yid:yt(v.videoUrl||""),title:v.title,ch:C[v.channelId]?.name||"",likes:v.likeCount||0});
+let items=[],msg="";
+if(SM=="o"){items=V.filter(v=>v.isShort&&v.id!=a).map(mk);if(own)items.unshift(mk(own))}
+else if(a){try{const j=await yf("videos",{part:"snippet",id:a}),d=j.items[0];if(d)items=[{id:a,col:"ytv",yid:a,title:dec(d.snippet.title),ch:dec(d.snippet.channelTitle),likes:0}]}catch(e){msg=e.message}}
+else{try{items=(await ytShorts()).map(i=>({id:i.id.videoId,col:"ytv",yid:i.id.videoId,title:dec(i.snippet.title),ch:dec(i.snippet.channelTitle),likes:0}))}catch(e){msg=e.message}}
+const sl=()=>snd?"শব্দ চালু":"শব্দ বন্ধ";
+app.innerHTML=`<div class="stop"><button class="${SM=="o"?"on":""}" data-s="o">আমাদের</button><button class="${SM=="y"?"on":""}" data-s="y">YouTube</button></div><div class="shs" id="shs">${items.length?items.map((it,i)=>`<div class="si" data-i="${i}"><div class="sov" data-t="${i}"></div><div class="sinfo"><div style="font-weight:600">${esc(it.ch)}</div><div style="font-size:14px;margin-top:4px">${esc(it.title)}</div></div>
+<div class="srail"><div><button data-l="${i}">${svg("like")}</button><small id="lc${i}">${it.likes||0}</small></div><div><button data-c="${i}">${svg("comment")}</button><small>মন্তব্য</small></div><div><button data-h="${i}">${svg("share")}</button><small>শেয়ার</small></div><div><button data-m="${i}">${svg("vol")}</button><small id="mt${i}">${sl()}</small></div></div></div>`).join(""):`<div class="ctr" style="color:#fff;padding-top:30vh">${esc(msg||(SM=="o"?"এখনো কোনো শর্ট ভিডিও নেই":"কিছু পাওয়া যায়নি"))}</div>`}</div>`;
+app.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{SM=b.dataset.s;if((location.hash||"#/")!="#/shorts")location.hash="#/shorts";else route()});
+const sh=$("#shs");if(!items.length)return;
+const cm=i=>{const e=sh.querySelector(`.si[data-i="${i}"]`);return e&&e.querySelector("iframe,video")};
+const setLk=i=>{const it=items[i],b=sh.querySelector(`[data-l="${i}"]`);if(!b)return;b.style.color=it.liked?"#ff0033":"#fff";b.querySelector("svg").style.fill=it.liked?"#ff0033":"none";$("#lc"+i).textContent=it.likes||0};
+let cur=-1;
+const deact=i=>{const m=cm(i);if(!m)return;if(m.tagName=="VIDEO"){m.pause();m.removeAttribute("src");m.load()}m.remove()};
+const act=async i=>{if(i===cur)return;if(cur>=0)deact(cur);cur=i;const el=sh.querySelector(`.si[data-i="${i}"]`),it=items[i];
+if(it.yid){const f=document.createElement("iframe");f.allow="autoplay;encrypted-media;fullscreen";f.dataset.pp="0";f.src=`https://www.youtube.com/embed/${it.yid}?autoplay=1&mute=${snd?0:1}&loop=1&playlist=${it.yid}&controls=0&playsinline=1&rel=0&modestbranding=1&enablejsapi=1&fs=0${location.protocol.startsWith("http")?"&origin="+encodeURIComponent(location.origin):""}`;el.prepend(f)}
+else{const v=document.createElement("video");v.loop=true;v.autoplay=true;v.muted=!snd;v.playsInline=true;v.src=it.url;el.prepend(v);v.play().catch(()=>{})}
+if(!it.ld){it.ld=true;try{const l=await getDoc(doc(db,it.col,it.id,"likes",U.uid));it.liked=l.exists();if(it.col=="ytv"){const d=await getDoc(doc(db,"ytv",it.id));it.likes=d.exists()?d.data().likeCount||0:0}setLk(i)}catch(e){}}};
+if(SIO)SIO.disconnect();
+SIO=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting&&e.intersectionRatio>=.6)act(+e.target.dataset.i)})},{root:sh,threshold:[.6]});
+sh.querySelectorAll(".si").forEach(x=>SIO.observe(x));
+sh.querySelectorAll("[data-t]").forEach(o=>o.onclick=()=>{const m=cm(+o.dataset.t);if(!m)return;if(m.tagName=="VIDEO"){m.paused?m.play():m.pause()}else{const p=m.dataset.pp=="1";yc(m,p?"playVideo":"pauseVideo");m.dataset.pp=p?"0":"1"}});
+sh.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{snd=!snd;const m=cm(cur);if(m){if(m.tagName=="VIDEO")m.muted=!snd;else yc(m,snd?"unMute":"mute")}sh.querySelectorAll("[id^=mt]").forEach(x=>x.textContent=sl())});
+sh.querySelectorAll("[data-h]").forEach(b=>b.onclick=()=>{const it=items[+b.dataset.h];share("shorts/"+it.id,it.title)});
+sh.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{const it=items[+b.dataset.c];location.hash="#/"+(it.col=="ytv"?"y/":"v/")+it.id});
+sh.querySelectorAll("[data-l]").forEach(b=>b.onclick=async()=>{const i=+b.dataset.l,it=items[i];if(it.busy)return;it.busy=true;try{const on=!!it.liked,bt=writeBatch(db),sub=doc(db,it.col,it.id,"likes",U.uid),tg=doc(db,it.col,it.id),dv={likeCount:increment(on?-1:1)};on?bt.delete(sub):bt.set(sub,{at:Date.now()});it.col=="ytv"?bt.set(tg,dv,{merge:true}):bt.update(tg,dv);await bt.commit();it.liked=!on;it.likes=Math.max(0,(it.likes||0)+(on?-1:1));setLk(i)}catch(e){toast(emsg(e))}it.busy=false})},
+async v(id){const v=V.find(x=>x.id==id);if(!v)return app.innerHTML='<div class="ctr">ভিডিও পাওয়া যায়নি</div>';const ch=C[v.channelId]||{};
+return watch("videos",id,{url:v.videoUrl,title:v.title,desc:v.description,likeCount:v.likeCount,channelId:v.channelId,chName:ch.name,chPhoto:ch.photoUrl,subs:ch.subscriberCount,owner:v.ownerUid,v})},
+async y(id){let d=YC["v"+id];if(!d){const j=await yf("videos",{part:"snippet",id});d=YC["v"+id]=j.items[0]}
+if(!d)return app.innerHTML='<div class="ctr">ভিডিও পাওয়া যায়নি</div>';const s=d.snippet;
+return watch("ytv",id,{yid:id,title:dec(s.title),desc:dec(s.description),chName:dec(s.channelTitle)})},
+async c(id){const ch=C[id];topBack(ch?ch.name:"চ্যানেল");if(!ch)return app.innerHTML='<div class="ctr">চ্যানেল নেই</div>';const s=await getDoc(doc(db,"users",U.uid,"subscriptions",id));
+const n=V.filter(v=>v.channelId==id).length,subs=fm(ch.ytSubs!=null?ch.ytSubs:(ch.subscriberCount||0))+" সাবস্ক্রাইবার";
+app.innerHTML=`${ch.bannerUrl?`<div style="padding:0 14px"><img src="${esc(ch.bannerUrl)}" style="width:100%;aspect-ratio:3/1;object-fit:cover;border-radius:12px;background:var(--c);display:block"></div>`:""}
+<div class="pad" style="display:flex;gap:16px;align-items:center">${av(ch.name,ch.photoUrl,72)}<div style="min-width:0"><div style="font-size:22px;font-weight:700;line-height:1.2">${esc(ch.name)}</div><div class="s">${ch.handle?esc(ch.handle)+" &middot; ":""}${subs} &middot; ${n} ভিডিও</div></div></div>
+${ch.about?`<div class="pad" style="padding-top:0"><div class="desc" id="cd" style="margin:0">${esc(ch.about)}</div></div>`:""}
+<div class="pad rw" style="padding-top:0"><button class="btn ${s.exists()?"":"p"}" id="sb" style="flex:1;justify-content:center;padding:13px">${s.exists()?"সাবস্ক্রাইবড":"সাবস্ক্রাইব"}</button><button class="btn" id="csh" style="padding:13px 16px">${svg("share")}</button></div>
+<div style="border-bottom:1px solid #8883;margin-bottom:12px"><button class="ctab on" data-t="v">ভিডিও</button><button class="ctab" data-t="s">শর্টস</button></div><div id="cl"></div>`;
+const cv=V.filter(v=>v.channelId==id&&!v.isShort),cs=V.filter(v=>v.channelId==id&&v.isShort);
+const showT=t=>{app.querySelectorAll(".ctab").forEach(b=>b.classList.toggle("on",b.dataset.t==t));$("#cl").innerHTML=t=="v"?list(cv):sgrid(cs)};
+app.querySelectorAll(".ctab").forEach(b=>b.onclick=()=>showT(b.dataset.t));showT("v");
+$("#csh").onclick=()=>share("c/"+id,ch.name);
+if($("#cd"))$("#cd").onclick=e=>e.currentTarget.classList.toggle("o");
+$("#sb").onclick=()=>tog(doc(db,"users",U.uid,"subscriptions",id),doc(db,"channels",id),"subscriberCount",s.exists(),{channelId:id})},
+async subs(){bar('<div class="logo">সাবস্ক্রিপশন</div>');const s=new Set((await getDocs(collection(db,"users",U.uid,"subscriptions"))).docs.map(d=>d.id));
+const cs=[...s].map(i=>C[i]).filter(Boolean);
+app.innerHTML=(cs.length?`<div class="hs" style="padding-top:6px">${cs.map(c=>`<a href="#/c/${c.id}">${av(c.name,c.photoUrl,56,1)}<div style="margin-top:4px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">${esc(c.name)}</div></a>`).join("")}</div>`:'<div class="ctr s">এখনো কোনো চ্যানেল সাবস্ক্রাইব করা হয়নি</div>')+list(V.filter(v=>s.has(v.channelId)))},
+async me(){bar('<div class="logo">প্রোফাইল</div>');const s=await getDocs(collection(db,"users",U.uid,"subscriptions")),cs=s.docs.map(d=>C[d.id]).filter(Boolean),mine=V.filter(v=>v.ownerUid==U.uid);
+const who=U.email.endsWith("@phone.myvideoapp.com")?U.email.split("@")[0]:U.email;
+app.innerHTML=`<div class="ctr">${av(U.displayName,U.photoURL,84,1)}<h2 style="margin:10px 0 2px">${esc(U.displayName)}</h2><div class="s">${esc(who)}</div></div>
+<div class="h">আমার ভিডিও (${mine.length})</div>${mine.map(v=>`<div class="lst"><a href="#/v/${v.id}" style="display:flex;gap:12px;flex:1;min-width:0"><img src="${esc(v.thumbnailUrl)}" style="width:96px;aspect-ratio:16/9;object-fit:cover;border-radius:8px;background:var(--c)"><span class="t">${esc(v.title)}</span></a><button class="btn" data-x="${v.id}">মুছুন</button></div>`).join("")||'<div class="s" style="padding:0 14px">এখনো কোনো ভিডিও আপলোড করা হয়নি</div>'}
+<div class="pad"><a class="btn p" href="#/up">নতুন ভিডিও আপলোড</a></div>
+<div class="h">সাবস্ক্রাইব করা চ্যানেল</div>${cs.length?`<div class="hs">${cs.map(c=>`<a href="#/c/${c.id}">${av(c.name,c.photoUrl,56,1)}<div style="margin-top:4px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">${esc(c.name)}</div></a>`).join("")}</div>`:'<div class="s" style="padding:0 14px">কোনোটি নেই</div>'}
+<div class="h">সেটিংস</div><div class="pad" style="padding-top:0"><input class="in" id="n" value="${esc(U.displayName)}" placeholder="নাম"><input class="in" id="ph" value="${esc(U.photoURL)}" placeholder="প্রোফাইল ছবির লিংক">
+<button class="btn p" id="sv">সেভ করুন</button></div>${ADM?'<div class="s" style="padding:6px 14px">আপনি অ্যাডমিন। উপরের সুইচ দিয়ে অ্যাডমিন মোডে যান।</div>':""}
+<div class="pad"><button class="btn" id="lo" style="width:100%;justify-content:center;color:var(--a)">লগআউট</button></div>`;
+$("#lo").onclick=()=>signOut(auth);
+app.querySelectorAll("[data-x]").forEach(b=>b.onclick=()=>delVideo(V.find(v=>v.id==b.dataset.x)));
+$("#sv").onclick=async()=>{await updateProfile(U,{displayName:$("#n").value,photoURL:$("#ph").value});await setDoc(doc(db,"users",U.uid),{name:$("#n").value,photoUrl:$("#ph").value},{merge:true});if(C[U.uid])await setDoc(doc(db,"channels",U.uid),{name:$("#n").value,photoUrl:$("#ph").value},{merge:true});await load();route()}},
+async up(){topBack("ভিডিও আপলোড");
+if(!C[U.uid]){try{await setDoc(doc(db,"channels",U.uid),{name:U.displayName||"ব্যবহারকারী",photoUrl:U.photoURL||"",subscriberCount:0,ownerUid:U.uid});await load()}catch(e){return app.innerHTML=`<div class="ctr err">${esc(emsg(e))}</div>`}}
+const adm=isAdmin();
+app.innerHTML=`<div class="pad"><div class="seg"><button id="m1" class="on">ভিডিও লিংক</button><button id="m2">আপলোড ভিডিও</button></div>
+${adm?`<select class="in" id="vc">${Object.values(C).map(c=>`<option value="${c.id}" ${c.id==U.uid?"selected":""}>${esc(c.name)}</option>`).join("")}</select>`:`<div class="s">চ্যানেল: ${esc(C[U.uid].name)}</div>`}
+<div id="fl"><input class="in" id="vu" placeholder="ভিডিও লিংক"><input class="in" id="vt" placeholder="থাম্বনেইল লিংক (YouTube লিংক হলে ফাঁকা রাখুন)"></div>
+<div id="fu" hidden><input class="in" id="vf" type="file" accept="video/*"><div class="s">থাম্বনেইল দিতে চাইলে ছবি বেছে নাও, ফাঁকা রাখলে ভিডিও থেকে নিজে বানাবে</div><input class="in" id="tf" type="file" accept="image/*"></div>
+<input class="in" id="vn" placeholder="টাইটেল"><textarea class="in" id="vd" rows="3" placeholder="বিবরণ"></textarea>
+<label class="s" style="display:flex;gap:8px;align-items:center;margin:6px 0 10px"><input type="checkbox" id="ish"> শর্ট ভিডিও (ছোট ও লম্বা করে ধরা ভিডিও)</label>
+<button class="btn p" id="av" style="width:100%;justify-content:center;padding:14px">ভিডিও যোগ করুন</button><div class="s" id="pg" style="margin-top:8px"></div></div>`;
+$("#m1").onclick=$("#m2").onclick=e=>{const u=e.currentTarget.id=="m2";$("#m1").classList.toggle("on",!u);$("#m2").classList.toggle("on",u);$("#fl").hidden=u;$("#fu").hidden=!u};
+$("#vf").onchange=e=>{const f=e.target.files[0];if(!f)return;const v=document.createElement("video"),u=URL.createObjectURL(f);v.preload="metadata";v.onloadedmetadata=()=>{if(v.videoHeight>v.videoWidth&&v.duration<=180)$("#ish").checked=true;URL.revokeObjectURL(u)};v.src=u};
+$("#av").onclick=async()=>{const b=$("#av"),pg=$("#pg"),up2=!$("#fu").hidden,f=up2?$("#vf").files[0]:null,tf=up2?$("#tf").files[0]:null;let vu=up2?"":$("#vu").value.trim(),vt=up2?"":$("#vt").value.trim();
+if(!$("#vn").value.trim())return pg.textContent="টাইটেল দিন";if(!f&&!vu)return pg.textContent=up2?"ভিডিও ফাইল বেছে নিন":"ভিডিও লিংক দিন";
+b.disabled=true;try{const id=Date.now(),nm=x=>x.name.replace(/[^\w.]/g,"_");if(!vt&&!f){const yi=yt(vu);if(yi)vt="https://i.ytimg.com/vi/"+yi+"/hqdefault.jpg"}
+const upl=(file,path)=>new Promise((ok,no)=>{const t=uploadBytesResumable(ref(st,path),file);t.on("state_changed",x=>pg.textContent="আপলোড হচ্ছে "+Math.round(x.bytesTransferred/x.totalBytes*100)+"%",no,async()=>ok(await getDownloadURL(t.snapshot.ref)))});
+if(f)vu=await upl(f,"videos/"+U.uid+"/"+id+"_"+nm(f));
+if(tf)vt=await upl(tf,"thumbs/"+U.uid+"/"+id+"_"+nm(tf));else if(!vt&&f){const bl=await frame(f);if(bl)vt=await upl(bl,"thumbs/"+U.uid+"/"+id+".jpg")}
+await addDoc(collection(db,"videos"),{title:$("#vn").value.trim(),description:$("#vd").value,videoUrl:vu,thumbnailUrl:vt,channelId:adm?$("#vc").value:U.uid,ownerUid:U.uid,isShort:$("#ish").checked||/\/shorts\//.test(vu),ownerName:U.displayName||"",likeCount:0,createdAt:serverTimestamp()});
+await load();location.hash="#/me"}catch(e){b.disabled=false;pg.textContent=emsg(e)}}},
+async adash(){bar('<div class="logo">ড্যাশবোর্ড</div>');let us=[];try{us=(await getDocs(collection(db,"users"))).docs.map(d=>({id:d.id,...d.data()}))}catch(e){}
+const bx=(n,t)=>`<div style="flex:1;background:var(--c);border-radius:12px;padding:14px 6px;text-align:center"><div style="font-size:22px;font-weight:700">${n}</div><div class="s">${t}</div></div>`;
+app.innerHTML=`<div class="pad"><div class="ah">ড্যাশবোর্ড</div><div style="display:flex;gap:8px">${bx(us.length,"ব্যবহারকারী")}${bx(V.length,"ভিডিও")}${bx(V.filter(v=>v.isShort).length,"শর্ট")}${bx(Object.keys(C).length,"চ্যানেল")}</div>
+<div class="s" style="margin-top:12px;padding:10px 12px;border-radius:12px;background:var(--c)">নতুন অ্যাডমিন বানানো যায় মালিকের আলাদা অ্যাপ থেকে। এই অ্যাপ থেকে অ্যাডমিন তৈরি করা যায় না।</div></div>
+<div class="h">ব্যবহারকারী (${us.length})</div>${us.map(u=>`<div class="lst">${av(u.name,u.photoUrl)}<div class="g"><b>${esc(u.name||"")}</b><span class="s">${esc(u.email||"")}${u.id==OWNER?" &middot; মালিক":""}</span></div></div>`).join("")||'<div class="s" style="padding:0 14px">কেউ নেই</div>'}
+<div class="pad"><button class="btn w" id="lo" style="margin-top:20px;color:var(--a)">লগআউট</button></div>`;
+$("#lo").onclick=()=>signOut(auth)},
+async aup(){bar('<div class="logo">আপলোড</div>');const opts=Object.values(C).map(c=>`<option value="${c.id}" ${(E?E.channelId==c.id:c.id==U.uid)?"selected":""}>${esc(c.name)}</option>`).join("");
+if(!opts)return app.innerHTML='<div class="ctr"><div class="ah">আগে একটা চ্যানেল বানান</div><a class="btn p" href="#/ach">চ্যানেল যোগ করুন</a></div>';
+const u=!E&&AUM=="u";
+app.innerHTML=`<div class="pad"><div class="ah">${E?"ভিডিও সম্পাদনা":"নতুন ভিডিও"}</div>${E?"":`<div class="seg"><button id="m1" class="${u?"":"on"}">ভিডিও লিংক</button><button id="m2" class="${u?"on":""}">আপলোড ভিডিও</button></div>`}
+<select class="in" id="vc">${opts}</select>
+<div id="fl" ${u?"hidden":""}><input class="in" id="vu" placeholder="ভিডিও লিংক" value="${esc(E?.videoUrl)}"><input class="in" id="vt" placeholder="থাম্বনেইল লিংক (YouTube লিংক হলে ফাঁকা রাখুন)" value="${esc(E?.thumbnailUrl)}"></div>
+<div id="fu" ${u?"":"hidden"}><div class="s">ভিডিও ফাইল</div><input class="in" id="vf" type="file" accept="video/*"><div class="s">থাম্বনেইল ছবি (ফাঁকা রাখলে ভিডিও থেকে নিজে বানাবে)</div><input class="in" id="tf" type="file" accept="image/*"></div>
+<input class="in" id="vn" placeholder="টাইটেল" value="${esc(E?.title)}"><textarea class="in" id="vd" rows="4" placeholder="বিবরণ">${esc(E?.description)}</textarea>
+<label class="s" style="display:flex;gap:8px;align-items:center;margin:6px 0 10px"><input type="checkbox" id="ish" ${E?.isShort?"checked":""}> শর্ট ভিডিও (ছোট ও লম্বা করে ধরা ভিডিও)</label>
+<div class="upb" id="upb" hidden><i id="pi"></i></div><div class="s" id="pg"></div>
+<button class="btn p w" id="go">${E?"সেভ করুন":"ভিডিও যোগ করুন"}</button>${E?'<button class="btn w" id="cx" style="margin-top:8px">বাতিল</button>':""}</div>`;
+if(!E){$("#m1").onclick=()=>{AUM="l";route()};$("#m2").onclick=()=>{AUM="u";route()}}else $("#cx").onclick=()=>{E=null;location.hash="#/avd"};
+if($("#vf"))$("#vf").onchange=e=>{const f=e.target.files[0];if(!f)return;const v=document.createElement("video"),uu=URL.createObjectURL(f);v.preload="metadata";v.onloadedmetadata=()=>{if(v.videoHeight>v.videoWidth&&v.duration<=180)$("#ish").checked=true;URL.revokeObjectURL(uu)};v.src=uu};
+$("#go").onclick=async()=>{const pg=$("#pg"),b=$("#go"),f=u?$("#vf").files[0]:null,tf=u?$("#tf").files[0]:null;let vu=u?"":$("#vu").value.trim(),vt=u?"":$("#vt").value.trim();
+if(!$("#vn").value.trim())return pg.textContent="টাইটেল দিন";if(u?!f:!vu)return pg.textContent=u?"ভিডিও ফাইল বেছে নিন":"ভিডিও লিংক দিন";
+b.disabled=true;try{const id=Date.now(),nm=x=>x.name.replace(/[^\w.]/g,"_");
+const upl=(file,p)=>new Promise((ok,no)=>{$("#upb").hidden=false;const t=uploadBytesResumable(ref(st,p),file);t.on("state_changed",x=>{const n=Math.round(x.bytesTransferred/x.totalBytes*100);$("#pi").style.width=n+"%";pg.textContent="আপলোড হচ্ছে "+n+"%"},no,async()=>ok(await getDownloadURL(t.snapshot.ref)))});
+if(!vt&&!f){const yi=yt(vu);if(yi)vt="https://i.ytimg.com/vi/"+yi+"/hqdefault.jpg"}
+if(f)vu=await upl(f,"videos/"+U.uid+"/"+id+"_"+nm(f));
+if(tf)vt=await upl(tf,"thumbs/"+U.uid+"/"+id+"_"+nm(tf));else if(!vt&&f){const bl=await frame(f);if(bl)vt=await upl(bl,"thumbs/"+U.uid+"/"+id+".jpg")}
+const d={title:$("#vn").value.trim(),description:$("#vd").value,videoUrl:vu,thumbnailUrl:vt,channelId:$("#vc").value,isShort:$("#ish").checked||/\/shorts\//.test(vu)};
+if(E)await updateDoc(doc(db,"videos",E.id),d);else await addDoc(collection(db,"videos"),{...d,ownerUid:U.uid,ownerName:U.displayName||"",likeCount:0,createdAt:serverTimestamp()});
+E=null;await load();toast("সেভ হয়েছে");location.hash="#/avd"}catch(e){b.disabled=false;pg.textContent=emsg(e)}}},
+async ayt(){bar('<div class="logo">YouTube থেকে আনুন</div>');app.innerHTML=`<div class="pad"><div class="ah">YouTube চ্যানেল থেকে ভিডিও আনুন</div><input class="in" id="yh" placeholder="চ্যানেলের @নাম বা চ্যানেলের লিংক"><button class="btn p w" id="yg">খুঁজুন</button><div id="yo" style="margin-top:14px"></div></div>`;
+$("#yg").onclick=async()=>{const o=$("#yo"),raw=$("#yh").value.trim();if(!raw)return;o.innerHTML='<div class="s">খোঁজা হচ্ছে…</div>';
+try{const q={part:"snippet,contentDetails,brandingSettings,statistics"},h=raw.match(/@[\w.\-]+/),im=raw.match(/UC[\w-]{22}/);
+if(im)q.id=im[0];else if(h)q.forHandle=h[0];else q.forHandle="@"+raw.replace(/^@/,"");
+const cj=await yf("channels",q),c=cj.items&&cj.items[0];if(!c){o.innerHTML='<div class="err">চ্যানেল পাওয়া যায়নি। @নাম বা চ্যানেলের লিংক দিন</div>';return}
+if(C["yt_"+c.id]){try{await setDoc(doc(db,"channels","yt_"+c.id),meta(c),{merge:true});Object.assign(C["yt_"+c.id],meta(c))}catch(e){}}
+const pl=c.contentDetails.relatedPlaylists.uploads;let items=[],tok="";
+for(let i=0;i<10;i++){const j=await yf("playlistItems",{part:"snippet,contentDetails",playlistId:pl,maxResults:"50",...(tok?{pageToken:tok}:{})});items.push(...j.items);tok=j.nextPageToken;if(!tok)break}
+items=items.filter(x=>!/^(Private|Deleted) video$/.test(x.snippet.title));
+const sset=await ytShortSet(items.map(x=>x.contentDetails.videoId));
+const fixes=V.filter(v=>!v.isShort&&sset.has(yt(v.videoUrl||"")));
+if(fixes.length){const bt=writeBatch(db);fixes.forEach(v=>bt.update(doc(db,"videos",v.id),{isShort:true}));try{await bt.commit();fixes.forEach(v=>v.isShort=true)}catch(e){}}
+const have=new Set(V.map(v=>yt(v.videoUrl||""))),fresh=items.filter(x=>!have.has(x.contentDetails.videoId)),sn=c.snippet;
+o.innerHTML=`<div class="lst" style="border:0;padding-left:0">${av(sn.title,sn.thumbnails?.default?.url||"")}<div class="g"><b>${esc(sn.title)}</b><span class="s">চ্যানেলে ${items.length}টি ভিডিও (${sset.size}টি শর্ট), ${fresh.length}টি নতুন</span></div></div>${fresh.length?`<button class="btn p w" id="yi">${fresh.length}টি ভিডিও আনুন</button>`:'<div class="s">সব ভিডিও আগে থেকেই অ্যাপে আছে</div>'}<div class="s" id="yp" style="margin-top:8px"></div>`;
+if(fresh.length)$("#yi").onclick=async()=>{$("#yi").disabled=true;const cid="yt_"+c.id;try{
+await setDoc(doc(db,"channels",cid),{...meta(c),subscriberCount:C[cid]?.subscriberCount||0},{merge:true});
+for(let i=0;i<fresh.length;i+=400){const b=writeBatch(db);fresh.slice(i,i+400).forEach(x=>{const vid=x.contentDetails.videoId,t=x.snippet;b.set(doc(collection(db,"videos")),{title:t.title,description:t.description||"",videoUrl:"https://www.youtube.com/watch?v="+vid,thumbnailUrl:"https://i.ytimg.com/vi/"+vid+"/hqdefault.jpg",channelId:cid,ownerUid:U.uid,ownerName:U.displayName||"",isShort:sset.has(vid),likeCount:0,createdAt:new Date(x.contentDetails.videoPublishedAt||t.publishedAt)})});await b.commit();$("#yp").textContent=Math.min(i+400,fresh.length)+"/"+fresh.length+" হয়েছে"}
+await load();toast("ভিডিও আনা হয়েছে");location.hash="#/avd"}catch(e){$("#yi").disabled=false;$("#yp").textContent=emsg(e)}}
+}catch(e){o.innerHTML=`<div class="err">${esc(e.message)}</div>`}}},
+async ach(){bar('<div class="logo">চ্যানেল</div>');app.innerHTML=`<div class="pad"><div class="ah">নতুন চ্যানেল</div><input class="in" id="cn" placeholder="চ্যানেলের নাম"><input class="in" id="cp" placeholder="প্রোফাইল ছবির লিংক"><div class="err" id="e"></div><button class="btn p w" id="ac">চ্যানেল যোগ করুন</button></div>
+<div class="h">সব চ্যানেল (${Object.keys(C).length})</div>${Object.values(C).map(c=>`<div class="lst">${av(c.name,c.photoUrl)}<div class="g"><b>${esc(c.name)}</b><span class="s">${fm(c.ytSubs!=null?c.ytSubs:(c.subscriberCount||0))} সাবস্ক্রাইবার</span></div><button class="btn" data-x="${c.id}">মুছুন</button></div>`).join("")||'<div class="s" style="padding:0 14px">কোনো চ্যানেল নেই</div>'}`;
+$("#ac").onclick=async()=>{const n=$("#cn").value.trim();if(!n)return $("#e").textContent="নাম দিন";try{await addDoc(collection(db,"channels"),{name:n,photoUrl:$("#cp").value.trim(),subscriberCount:0});await load();toast("চ্যানেল যোগ হয়েছে");route()}catch(e){$("#e").textContent=emsg(e)}};
+app.querySelectorAll("[data-x]").forEach(b=>b.onclick=async()=>{if(V.some(v=>v.channelId==b.dataset.x))return toast("আগে এই চ্যানেলের ভিডিও মুছুন");if(confirm("চ্যানেল মুছবেন?")){try{await deleteDoc(doc(db,"channels",b.dataset.x));await load();route()}catch(e){toast(emsg(e))}}})},
+async avd(){bar('<div class="logo">সব ভিডিও</div>');app.innerHTML=`<div class="h">সব ভিডিও (${V.length})</div>${V.map(v=>`<div class="lst"><img class="lt" src="${esc(v.thumbnailUrl)}"><div class="g"><b>${esc(v.title)}</b><span class="s">${esc(C[v.channelId]?.name||"")}${v.isShort?" &middot; শর্ট":""}</span></div><div style="display:flex;flex-direction:column;gap:6px"><button class="btn" data-e="${v.id}">সম্পাদনা</button><button class="btn" data-x="${v.id}">মুছুন</button></div></div>`).join("")||'<div class="s" style="padding:0 14px">এখনো কোনো ভিডিও নেই</div>'}`;
+app.querySelectorAll("[data-e]").forEach(b=>b.onclick=()=>{E=V.find(v=>v.id==b.dataset.e);location.hash="#/aup"});
+app.querySelectorAll("[data-x]").forEach(b=>b.onclick=()=>delVideo(V.find(v=>v.id==b.dataset.x)))}};
+const frame=f=>new Promise(r=>{const v=document.createElement("video"),u=URL.createObjectURL(f);v.muted=true;v.playsInline=true;v.src=u;v.onloadeddata=()=>{v.currentTime=Math.min(1,(v.duration||2)/2)};v.onseeked=()=>{const c=document.createElement("canvas");c.width=480;c.height=270;c.getContext("2d").drawImage(v,0,0,480,270);c.toBlob(x=>{URL.revokeObjectURL(u);r(x)},"image/jpeg",.8)};v.onerror=()=>r(null);setTimeout(()=>r(null),8000)});
+async function delVideo(v){if(!v||!confirm("ভিডিও মুছবেন?"))return;for(const u of [v.videoUrl,v.thumbnailUrl])if(u&&u.includes("firebasestorage"))try{await deleteObject(ref(st,u))}catch(e){}
+await deleteDoc(doc(db,"videos",v.id));await load();toast("মুছে ফেলা হয়েছে");const h=location.hash||"#/";if(/^#\/(v|y)\//.test(h)||!(ADM&&AM)){if(h=="#/")route();else location.hash="#/"}else route()}
+async function tog(sub,target,field,on,extra={},mg=false){const b=writeBatch(db);on?b.delete(sub):b.set(sub,{at:Date.now(),...extra});const dv={[field]:increment(on?-1:1)};mg?b.set(target,dv,{merge:true}):b.update(target,dv);await b.commit();if(!mg)await load();K=true;route()}
+async function watch(col,id,o){const yv=col=="ytv";
+const[l,cs,vd,sb]=await Promise.all([getDoc(doc(db,col,id,"likes",U.uid)),getDocs(query(collection(db,col,id,"comments"),orderBy("createdAt","desc"))),yv?getDoc(doc(db,col,id)):Promise.resolve(null),o.channelId?getDoc(doc(db,"users",U.uid,"subscriptions",o.channelId)):Promise.resolve(null)]);
+const lc=yv?(vd.exists()?vd.data().likeCount||0:0):(o.likeCount||0),y=o.yid||yt(o.url||"");
+const pl=y?`<iframe class="pl" src="https://www.youtube.com/embed/${y}?playsinline=1&rel=0${location.protocol.startsWith("http")?"&origin="+encodeURIComponent(location.origin):""}" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay;encrypted-media;fullscreen" allowfullscreen></iframe>`:`<video class="pl" src="${esc(o.url)}" controls playsinline></video>`;
+const can=!yv&&(o.owner===U.uid||isAdmin());
+const head=o.channelId?`<a href="#/c/${o.channelId}">${av(o.chName,o.chPhoto)}</a><a class="g" href="#/c/${o.channelId}"><b>${esc(o.chName)}</b><div class="s">${o.subs||0} সাবস্ক্রাইবার</div></a><button class="btn ${sb.exists()?"":"p"}" id="sb">${sb.exists()?"সাবস্ক্রাইবড":"সাবস্ক্রাইব"}</button>`:`${av(o.chName,"")}<div class="g"><b>${esc(o.chName)}</b></div>`;
+app.innerHTML=`<div class="pw"><button class="ib bkb" id="bk">${svg("back")}</button>${pl}</div><div class="pad"><div style="font-size:18px;font-weight:600;line-height:1.35">${esc(o.title)}</div>${y?`<a class="s" style="display:block;text-decoration:underline" href="https://www.youtube.com/watch?v=${y}" target="_blank" rel="noopener">প্লেয়ার না চললে YouTube-এ দেখুন</a>`:""}
+<div class="rw" style="margin-top:14px">${head}</div>
+<div style="margin-top:14px" class="rw"><button class="btn lk ${l.exists()?"on":""}" id="lk">${svg("like")} ${lc}</button><button class="btn" id="sh">${svg("share")} শেয়ার</button>${can?'<button class="btn" id="dv" style="color:var(--a)">ভিডিও মুছুন</button>':""}</div>
+<div class="desc" id="ds">${esc(o.desc||"বিবরণ নেই")}</div><div style="font-weight:600">কমেন্ট ${cs.size}</div>
+${cs.docs.map(d=>{const c=d.data();return`<div class="cm">${av(c.userName,"",34)}<div><small>${esc(c.userName)}${c.uid===U.uid?`<a href="#" data-d="${d.id}">মুছুন</a>`:""}</small><div>${esc(c.text)}</div></div></div>`}).join("")}</div>`;
+$("#cb").innerHTML=`<input class="in" id="ct" placeholder="কমেন্ট লিখুন"><button class="ib" id="cs" style="color:var(--a)">${svg("send")}</button>`;
+$("#bk").onclick=()=>history.back();$("#ds").onclick=e=>e.currentTarget.classList.toggle("o");
+$("#sh").onclick=()=>share((yv?"y/":"v/")+id,o.title);
+$("#lk").onclick=()=>tog(doc(db,col,id,"likes",U.uid),doc(db,col,id),"likeCount",l.exists(),{},yv);
+if(o.channelId)$("#sb").onclick=()=>tog(doc(db,"users",U.uid,"subscriptions",o.channelId),doc(db,"channels",o.channelId),"subscriberCount",sb.exists(),{channelId:o.channelId});
+if(can)$("#dv").onclick=()=>delVideo(o.v);
+$("#cs").onclick=async()=>{const t=$("#ct").value.trim();if(!t)return;await addDoc(collection(db,col,id,"comments"),{uid:U.uid,userName:U.displayName||"ব্যবহারকারী",text:t,createdAt:serverTimestamp()});K=true;route()};
+app.querySelectorAll("[data-d]").forEach(a=>a.onclick=async e=>{e.preventDefault();await deleteDoc(doc(db,col,id,"comments",a.dataset.d));K=true;route()})}
+const atabs=[["adash","dash","ড্যাশবোর্ড"],["aup","up","আপলোড"],["ayt","yt","YouTube"],["ach","ch","চ্যানেল"],["avd","vd","ভিডিও"]];
+const tabs=[["home","","হোম"],["shorts","shorts","শর্টস"],["subs","subs","সাবস্ক্রিপশন"],["me","user","আপনি"]];
+async function route(){if(!U)return;let[,p0,a]=(location.hash||"#/").slice(1).split("/"),p=pages[p0||"home"]?(p0||"home"):"home",y=scrollY;
+const A=ADM&&AM;if(A&&!ADMP.has(p)&&!["v","y","c","shorts"].includes(p))p="adash";if(!A&&ADMP.has(p))p="home";if(p!=="aup")E=null;
+const wv=p==="v"||p==="y",bc=[wv?"v":p==="shorts"?"sh":""];if(ADM&&!wv&&p!=="shorts")bc.push("adm");document.body.className=bc.join(" ").trim();$("#cb").hidden=!wv;$("#swi").checked=A;
+const it=(A?atabs:tabs).map(([k,i,t])=>`<a href="#/${k=="home"?"":k}" class="${p==k?"on":""}">${svg(k=="home"?"home":i)}${t}</a>`);if(!A)it.splice(2,0,`<a href="#/up"><span class="pb">${svg("plus")}</span></a>`);$("#nav").innerHTML=it.join("");
+try{if(!V.length)await load();await pages[p](a)}catch(e){app.innerHTML=`<div class="ctr err">${esc(emsg(e))}</div>`}
+scrollTo(0,K?y:0);K=false}
+addEventListener("hashchange",route);
+$("#swi").onchange=e=>{AM=e.target.checked&&ADM;try{localStorage.setItem("fx7am",AM?"1":"0")}catch(x){}const h=AM?"#/adash":"#/";if((location.hash||"#/")==h)route();else location.hash=h};
+onAuthStateChanged(auth,async u=>{window.__ok=true;U=u;if(u){V=[];ADM=false;try{ADM=u.uid===OWNER||(await getDoc(doc(db,"admins",u.uid))).exists()}catch(e){}AM=AM&&ADM;route()}else{ADM=false;document.body.className="out";$("#cb").hidden=true;login(false)}});
+</script></body></html>
